@@ -20,6 +20,7 @@ import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
+//import com.google.firebase.BuildConfig
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.launch
@@ -59,17 +60,21 @@ class LoginActivity : AppCompatActivity() {
 
         //Para mostrar las cuentas con un bottom sheet
         googleIdOption = GetGoogleIdOption.Builder()
-            .setFilterByAuthorizedAccounts(true)
-            .setServerClientId(getString(R.string.default_web_client_id))
+            .setFilterByAuthorizedAccounts(false)
+            //.setServerClientId(getString(R.string.default_web_client_id))
+            .setServerClientId(BuildConfig.WEB_CLIENT_ID)
             .setAutoSelectEnabled(true)
             .setNonce(nonce)
         .build()
 
 
         //Para usar el flujo de un botón
-        signInWithGoogleOption = GetSignInWithGoogleOption.Builder(getString(R.string.default_web_client_id))
+        /*signInWithGoogleOption = GetSignInWithGoogleOption.Builder(
+            //getString(R.string.default_web_client_id)
+            BuildConfig.WEB_CLIENT_ID
+        )
             .setNonce(nonce)
-        .build()
+        .build()*/
 
         if(firebaseAuth.currentUser != null){
             startActivity(Intent(this, MainActivity::class.java))
